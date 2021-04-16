@@ -153,19 +153,35 @@ class TD3(object):
 
 
 	def save(self, filename):
-		torch.save(self.critic.state_dict(), filename + "_critic")
-		torch.save(self.critic_optimizer.state_dict(), filename + "_critic_optimizer")
-		
-		torch.save(self.actor.state_dict(), filename + "_actor")
-		torch.save(self.actor_optimizer.state_dict(), filename + "_actor_optimizer")
+		# torch.save(self.critic.state_dict(), filename + "_critic")
+		# torch.save(self.critic_optimizer.state_dict(), filename + "_critic_optimizer")
+		#
+		# torch.save(self.actor.state_dict(), filename + "_actor")
+		# torch.save(self.actor_optimizer.state_dict(), filename + "_actor_optimizer")
+
+
+		torch.save(self.critic.state_dict(), "_critic")
+		torch.save(self.critic_optimizer.state_dict(), "_critic_optimizer")
+
+		torch.save(self.actor.state_dict(), "_actor")
+		torch.save(self.actor_optimizer.state_dict(), "_actor_optimizer")
 
 
 	def load(self, filename):
-		self.critic.load_state_dict(torch.load(filename + "_critic"))
-		self.critic_optimizer.load_state_dict(torch.load(filename + "_critic_optimizer"))
+		self.critic.load_state_dict(torch.load("_critic"))
+		self.critic_optimizer.load_state_dict(torch.load("_critic_optimizer"))
 		self.critic_target = copy.deepcopy(self.critic)
 
-		self.actor.load_state_dict(torch.load(filename + "_actor"))
-		self.actor_optimizer.load_state_dict(torch.load(filename + "_actor_optimizer"))
+		self.actor.load_state_dict(torch.load("_actor"))
+		self.actor_optimizer.load_state_dict(torch.load("_actor_optimizer"))
+		self.actor_target = copy.deepcopy(self.actor)
+
+	def load_only_actor(self, filename):
+		# self.critic.load_state_dict(torch.load("_critic"))
+		# self.critic_optimizer.load_state_dict(torch.load("_critic_optimizer"))
+		# self.critic_target = copy.deepcopy(self.critic)
+
+		self.actor.load_state_dict(torch.load("_actor"))
+		self.actor_optimizer.load_state_dict(torch.load("_actor_optimizer"))
 		self.actor_target = copy.deepcopy(self.actor)
 		
